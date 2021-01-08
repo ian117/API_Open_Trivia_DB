@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API😎👌</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <form action="#" onsubmit="event.preventDefault(), getQuestions()">
+            <div class="form-group">
+                <label  class="mt-3" for="totalQuestions">Number of Questions</label>
+                <select class="form-control" id="totalQuestions">
+                  <option selected>10</option>
+                  <option>20</option>
+                  <option>30</option>
+                  <option>40</option>
+                  <option>50</option>
+                </select>
+                <label for="category" class="mt-3">Category</label>
+                <select class="form-control" id="category" required>
+                </select>
+                <label for="difficulty" class="mt-3">Difficulty</label>
+                <select class="form-control" id="difficulty" required>
+                  <option></option>
+                  <option value="easy" selected>Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+                <label for="type" class="mt-3">Type</label>
+                <select class="form-control" id="type" required>
+                  <option></option>
+                  <option value="multiple" selected>Multi Choice</option>
+                  <option value="boolean">True/False</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-info">I want my trivia</button>
+            </form>
+        <form action="#" onsubmit="event.preventDefault()" id="formAnswers">
+          <div class="row" id="questions-container">
+          </div>
+          <!-- Aquí va el button -->
+        </form>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>
