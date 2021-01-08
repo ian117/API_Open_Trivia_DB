@@ -149,6 +149,11 @@ function results(){
     let rightANSWERS = [...correctANSWERS]
     console.log(rightANSWERS)
 
+    if(inputs_check.length > 10){
+        alert("Por favor limita tus respuestas a 10")
+        return
+    }
+
     for (var i = 0; i < rightANSWERS.length; ++i) {
        if (rightANSWERS[i] == inputs_check[i]) 
        counter += 1
