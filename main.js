@@ -1,3 +1,11 @@
+function encode_utf8(s) {
+    return unescape(encodeURIComponent(s));
+  }
+  
+function decode_utf8(s) {
+    return decodeURIComponent(escape(s));
+  }
+
 const urlDeCategory = "https://opentdb.com/api_category.php"
 let correctANSWERS = []
 
@@ -43,18 +51,15 @@ function addAnswers(element){
     console.log(answersMix)
     let answersParr = '';
     answersParr = `
-        <input type="checkbox" class="chkbx" name="${answersMix[0]+110}" id="${answersMix[0]+110}" value="${answersMix[0]}"></input>
-        <label for="${answersMix[0]+110}"> ${answersMix[0]}</label><br>
-        <input type="checkbox" class="chkbx" name="${answersMix[1]+110}" id="${answersMix[1]+110}" value="${answersMix[1]}"></input>
-        <label for="${answersMix[1]+110}"> ${answersMix[1]}</label><br>
-        <input type="checkbox" class="chkbx" name="${answersMix[2]+110}" id="${answersMix[2]+110}" value="${answersMix[2]}"></input>
-        <label for="${answersMix[2]+110}"> ${answersMix[2]}</label><br>
-        <input type="checkbox" class="chkbx" name="${answersMix[3]+110}" id="${answersMix[3]+110}" value="${answersMix[3]}"></input>
-        <label for="${answersMix[3]+110}"> ${answersMix[3]}</label><br>
+        <option id="${answersMix[0]+1}" value="${answersMix[0]}">${answersMix[0]}</option>
+       
+        <option id="${answersMix[1]+1}" value="${answersMix[1]}">${answersMix[1]}</option>
+        
+        <option id="${answersMix[2]+1}" value="${answersMix[2]}">${answersMix[2]}</option>
+        
+        <option id="${answersMix[3]+1}" value="${answersMix[3]}">${answersMix[3]}</option>
+        
         `
-
-//  <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-//<label for="vehicle1"> I have a bike</label><br>
     return answersParr
 
 }
@@ -81,7 +86,9 @@ function printData(data) {
                     <div class="card-body">
                         ${element.question}
                             <br>
-                        ${addAnswers(element)}
+                        <select class="chkbx" name="" id="">
+                            ${addAnswers(element)}
+                        </select>
                     </div>
                 </div>
             </div>`
@@ -127,7 +134,6 @@ function getQuestions() {
             } else {
             printData(data.results)
             correctANSWERS = [...correctAnswers(data.results)]
-            console.log(correctANSWERS)
             }
           }
         );
@@ -143,8 +149,21 @@ function printCorrect(){
 
 function results(){
     let counter = 0;
-    let inputs_check = [...document.querySelectorAll(".chkbx:checked")].map(element => element.value) 
+    let inputs_check = [...document.querySelectorAll(".chkbx")].map(element => element.value) 
+
+    // for(let i = 0; i < correctANSWERS.length; i++){
+    //     if(i == 0){
+    //         inputs_check.splice(0,0,decode_utf8(inputs_check[0])) 
+    //         correctANSWERS.splice(0,0,decode_utf8(correctANSWERS[0])) 
+
+    //     }else{
+    //         inputs_check.splice(i,0,decode_utf8(inputs_check[i])) 
+    //         correctANSWERS.splice(i,0,decode_utf8(correctANSWERS[i]))
+    //     }
+    // }
+
     console.log(inputs_check)
+
 
     let rightANSWERS = [...correctANSWERS]
     console.log(rightANSWERS)
