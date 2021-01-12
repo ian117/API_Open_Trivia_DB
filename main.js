@@ -9,6 +9,8 @@ function decode_utf8(s) {
 const urlDeCategory = "https://opentdb.com/api_category.php"
 let correctANSWERS = []
 
+
+//Hacemos la petición para las 
 function generateCategories(category){
     const containerCategory = document.getElementById("category");
 
@@ -40,6 +42,8 @@ function printVacio(){
     setTimeout(function() {document.getElementById("questions-container").classList.remove("grow")}, 400)
 }
 
+//Añadimos las OPCIONES para la pregunta
+
 function addAnswers(element){
     let correct = element.correct_answer;
     let incorrect = element.incorrect_answers;
@@ -47,6 +51,7 @@ function addAnswers(element){
 
     answersMix = [...incorrect]
     answersMix.splice(Math.floor(Math.random() * 4), 0, correct)
+    //CONSOLE.LOG DE CORRECTAS /
     console.log(correct)
     console.log(answersMix)
     let answersParr = '';
@@ -64,7 +69,7 @@ function addAnswers(element){
 
 }
 
-
+//Hacemos un Print en el HTML de los datos
 
 function printData(data) {
     // obtener donde quiero poner los datos/elementos
@@ -117,6 +122,7 @@ function correctAnswers(data){
      return (rightAnswers)
 }
 
+//Fetch / Petición de los datos / URL
 
 function getQuestions() {
     const totalQuestions = document.getElementById("totalQuestions").value; //10
@@ -139,37 +145,39 @@ function getQuestions() {
         );
 }
 
+//Funciones Alert /
 function printNoCorrect(counter){
     alert(`Tuviste: ${counter} acertadas! Intenta otra vez`)
 }
 
 function printCorrect(){
-    alert("Sos un  Crack! 10/10")
+    alert("Sos un  Crack! Todas son correctas")
 }
 
+//Comparación de Resultados
 function results(){
+    const totalQuestions = document.getElementById("totalQuestions").value;
+
     let counter = 0;
     let inputs_check = [...document.querySelectorAll(".chkbx")].map(element => element.value) 
-
-    // for(let i = 0; i < correctANSWERS.length; i++){
-    //     if(i == 0){
-    //         inputs_check.splice(0,0,decode_utf8(inputs_check[0])) 
-    //         correctANSWERS.splice(0,0,decode_utf8(correctANSWERS[0])) 
-
-    //     }else{
-    //         inputs_check.splice(i,0,decode_utf8(inputs_check[i])) 
-    //         correctANSWERS.splice(i,0,decode_utf8(correctANSWERS[i]))
-    //     }
-    // }
 
     console.log(inputs_check)
 
 
     let rightANSWERS = [...correctANSWERS]
+
+    for(let i = 0; i < rightANSWERS.length; i++){
+        let txt = document.createElement("textarea");
+        txt.innerHTML = rightANSWERS[i];
+        let value = txt.value;
+        rightANSWERS.splice(i,1, value)
+        txt.remove()
+    }
+    
     console.log(rightANSWERS)
 
-    if(inputs_check.length > 10){
-        alert("Por favor limita tus respuestas a 10")
+    if(inputs_check.length > totalQuestions){
+        alert(`Por favor limita tus respuestas a ${totalQuestions}`)
         return
     }
 
@@ -177,7 +185,7 @@ function results(){
        if (rightANSWERS[i] == inputs_check[i]) 
        counter += 1
     }
-    if(counter == 10){
+    if(counter == totalQuestions){
         printCorrect()
     } else {
         printNoCorrect(counter)
