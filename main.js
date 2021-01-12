@@ -1,3 +1,5 @@
+import Question from './questions'
+
 function encode_utf8(s) {
     return unescape(encodeURIComponent(s));
   }
@@ -86,18 +88,26 @@ function printData(data) {
 
     let createButtonForAnswers = document.createElement('button');
     data.forEach(element => {
-        html += `<div class="col-md-4 mt-3">
-                <div class="card h-100">
-                    <div class="card-body">
-                        ${element.question}
-                            <br>
-                        <select class="chkbx" name="" id="">
-                            ${addAnswers(element)}
-                        </select>
-                    </div>
-                </div>
-            </div>`
-    });
+        let question = new Question(element.question, element)
+        html += question.html
+    })
+    
+    // data.forEach(element => {
+    //     html += `<div class="col-md-4 mt-3">
+    //             <div class="card h-100">
+    //                 <div class="card-body">
+    //                     ${element.question}
+    //                         <br>
+    //                     <select class="chkbx" name="" id="">
+    //                         ${addAnswers(element)}
+    //                     </select>
+    //                 </div>
+    //             </div>
+    //         </div>`
+    // });
+
+
+
     // poner los datos en el html
     containerData.innerHTML = html;
 
