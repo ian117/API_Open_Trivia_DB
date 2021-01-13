@@ -91,10 +91,10 @@ function printVacio() {
         html += question.html
     })
 
-/////////
-//// Poner los datos en el html
-/////////
-containerData.innerHTML = html;
+    /////////
+    //// Poner los datos en el html
+    /////////
+    containerData.innerHTML = html;
 
     let newbutton = answersForm.insertBefore(createButtonForAnswers, answersForm.firstElementChild.nextSibling);
     newbutton.classList.add("btn");
@@ -197,6 +197,11 @@ function printCorrect(){
         printNoCorrect(counter)
     }
 }
+
+/////////
+//Hago que las Funciones que se utilizan en el index.html se pueden utilizar
+// ya que se llaman por onsubmit y es archivo index es type="module"
+/////////
 
 export default addAnswers
 window.getQuestion = getQuestion
