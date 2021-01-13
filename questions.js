@@ -1,3 +1,4 @@
+import addAnswers from './main.js'
 class Question {
     constructor(question, answer){
         this.question = question;
@@ -16,4 +17,4 @@ class Question {
     }
 }
 
-export default Question
+export default Question;

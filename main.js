@@ -1,32 +1,29 @@
-import Question from './questions'
+import Question from "./questions.js";
+import Category from "./Categories.js";
 
-function encode_utf8(s) {
-    return unescape(encodeURIComponent(s));
-  }
+  let correctANSWERS = [];
   
-function decode_utf8(s) {
-    return decodeURIComponent(escape(s));
-  }
+  const urlDeCategory = "https://opentdb.com/api_category.php";
 
-const urlDeCategory = "https://opentdb.com/api_category.php"
-let correctANSWERS = []
-
-
-//Hacemos la petición para las 
+/////////
+//Hacemos la petición para las CATEGORIAS
+/////////
 function generateCategories(category){
     const containerCategory = document.getElementById("category");
 
-    category.forEach((category) => {
-            containerCategory.innerHTML += `<option value="${category.id}">${category.name}</option>`
+    category.forEach((categori) => {
+            let categoryInstance = new Category(categori)
+            containerCategory.innerHTML += categoryInstance.html
     })
 }
 
 fetch(urlDeCategory)
     .then(response => response.json())
     .then(data => generateCategories(data.trivia_categories))
-
-
-function printVacio(){
+/////////
+////Función para imprimirse si no hay nada
+/////////
+function printVacio() {
     if(document.getElementById("submitButton")){
         document.getElementById("submitButton").remove()
     }
@@ -44,9 +41,10 @@ function printVacio(){
     setTimeout(function() {document.getElementById("questions-container").classList.remove("grow")}, 400)
 }
 
+/////////
 //Añadimos las OPCIONES para la pregunta
-
-function addAnswers(element){
+/////////
+  function addAnswers(element){
     let correct = element.correct_answer;
     let incorrect = element.incorrect_answers;
     let answersMix = [];
@@ -71,9 +69,10 @@ function addAnswers(element){
 
 }
 
+/////////
 //Hacemos un Print en el HTML de los datos
-
-function printData(data) {
+/////////
+ function printData(data) {
     // obtener donde quiero poner los datos/elementos
     const containerData = document.getElementById('questions-container');
     const answersForm = document.getElementById('formAnswers');
@@ -91,25 +90,11 @@ function printData(data) {
         let question = new Question(element.question, element)
         html += question.html
     })
-    
-    // data.forEach(element => {
-    //     html += `<div class="col-md-4 mt-3">
-    //             <div class="card h-100">
-    //                 <div class="card-body">
-    //                     ${element.question}
-    //                         <br>
-    //                     <select class="chkbx" name="" id="">
-    //                         ${addAnswers(element)}
-    //                     </select>
-    //                 </div>
-    //             </div>
-    //         </div>`
-    // });
 
-
-
-    // poner los datos en el html
-    containerData.innerHTML = html;
+/////////
+//// Poner los datos en el html
+/////////
+containerData.innerHTML = html;
 
     let newbutton = answersForm.insertBefore(createButtonForAnswers, answersForm.firstElementChild.nextSibling);
     newbutton.classList.add("btn");
@@ -123,6 +108,9 @@ function printData(data) {
     newbutton.innerHTML = "I am correct? 🤷‍♀️";
     //finalicé de poner elementos BASE en el html
 }
+/////////
+////Hago el PUSH de las respuestas correctas desde el fetch (función) al array global
+/////////
 
 function correctAnswers(data){
     const rightAnswers = [];
@@ -132,9 +120,11 @@ function correctAnswers(data){
      return (rightAnswers)
 }
 
-//Fetch / Petición de los datos / URL
 
-function getQuestions() {
+/////////
+////   Fetch / Petición de los datos / URL / Mando la URL cómo se debe a la API
+/////////
+ function getQuestion() {
     const totalQuestions = document.getElementById("totalQuestions").value; //10
     const category = document.getElementById("category").value;     //
     const difficulty = document.getElementById("difficulty").value; // "easy"
@@ -155,7 +145,9 @@ function getQuestions() {
         );
 }
 
-//Funciones Alert /
+/////////
+//// Funciones Alert / Si es correcto o incorrecto las respuestas/ Just Print
+/////////
 function printNoCorrect(counter){
     alert(`Tuviste: ${counter} acertadas! Intenta otra vez`)
 }
@@ -163,9 +155,13 @@ function printNoCorrect(counter){
 function printCorrect(){
     alert("Sos un  Crack! Todas son correctas")
 }
+//////////////////
 
+
+/////////
 //Comparación de Resultados
-function results(){
+/////////
+ function results(){
     const totalQuestions = document.getElementById("totalQuestions").value;
 
     let counter = 0;
@@ -201,3 +197,7 @@ function results(){
         printNoCorrect(counter)
     }
 }
+
+export default addAnswers
+window.getQuestion = getQuestion
+window.results = results
