@@ -1,9 +1,9 @@
 import Question from "./questions.js";
 import Category from "./Categories.js";
+import emptyCard from "./emptyCard.js";
+import Request from "./request.js";
 
   let correctANSWERS = [];
-  
-  const urlDeCategory = "https://opentdb.com/api_category.php";
 
 /////////
 //Hacemos la petición para las CATEGORIAS
@@ -17,7 +17,7 @@ function generateCategories(category){
     })
 }
 
-fetch(urlDeCategory)
+    Request.getCategories()
     .then(response => response.json())
     .then(data => generateCategories(data.trivia_categories))
 /////////
@@ -28,14 +28,8 @@ function printVacio() {
         document.getElementById("submitButton").remove()
     }
     const containerData = document.getElementById('questions-container');
-    
-    let html = `<div class="col-md-4 mt-3 mb-3">
-                <div class="card h-100">
-                    <div id="this-card" class="card-body nothing-here">
-                    <h4>No hay suficientes preguntas, lo siento 🤷‍♀️😢</h4>
-                    </div>
-                </div>
-                </div>`
+    const cardEmpty = new emptyCard()
+    let html = cardEmpty.html;
     document.getElementById("questions-container").classList.add("grow")
     containerData.innerHTML = html;
     setTimeout(function() {document.getElementById("questions-container").classList.remove("grow")}, 400)
@@ -99,9 +93,8 @@ function printVacio() {
     let newbutton = answersForm.insertBefore(createButtonForAnswers, answersForm.firstElementChild.nextSibling);
     newbutton.classList.add("btn");
     newbutton.classList.add("btn-info");
-    newbutton.classList.add("mt-3");
-    newbutton.classList.add("mb-3");
-    newbutton.classList.add("mb-3");
+    newbutton.classList.add("mt-3", "mb-3");
+    //newbutton.classList.add("mb-3");
     newbutton.setAttribute("type", "submit");
     newbutton.setAttribute("id", "submitButton");
     newbutton.setAttribute("onclick", "results()");
